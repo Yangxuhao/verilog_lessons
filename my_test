@@ -1,0 +1,45 @@
+module test (/*AUTOARG*/
+
+);
+
+input clk;
+input rst_n;   
+input i;
+output              douty;
+
+parameter DWIDTH=32;
+
+/*AUTOREG*/
+
+/*AUTOWIRE*/
+
+assign doutx = i;
+
+always @(posedge clk or negedge rst_n)begin
+  if(!rst_n)begin
+    douty <= 1'd0;
+  end
+  else 
+    douty <= doutx;
+end
+
+assign doutx = i & o[DWODTH-1];
+
+foo u_foo(/*autoinst*/
+
+);
+
+endmodule
+//Local Variables:
+//verilog-library-directories:("." "foo")
+//End:
+
+module foo(/*AUTOARG*/);
+
+input i;
+output [DWIDTH-1:0] o;
+
+endmodule
+//Local Variables:
+//verilog-library-directories:(".")
+//End:

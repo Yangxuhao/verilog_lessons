@@ -1,0 +1,51 @@
+//03/23/21 15:02:12
+//Author£ºxuhao Yang
+`timescale 1ns/1ps
+`define Add         3'b000
+`define Substract   3'b001
+`define Substract_a 3'b010
+`define Or          3'b011
+`define And         3'b100
+`define Xor         3'b101
+`define Xnor        3'b110
+
+module  alu_8bits(a,b,oper,c_out,sum);
+    input[7:0] a,b;
+    input[11:0] oper;
+    output reg c_out;
+    output reg[7:0] sum;
+    
+    always@(oper,a,b)begin
+    	case(oper)
+    		`Add:{c_out,sum} = a+b;
+    		`Substract:sum = a-b;
+    		`Substract_a:sum = b-a;
+    		`Or:sum = a|b;
+    		`And:sum = a&b;
+    		`Xor:sum = a^b;
+    		`Xnor:sum= a~^b;
+    	endcase
+    end
+
+endmodule
+
+module  alu_8bits_tb;
+reg[7:0] a,b;
+reg[2:0] oper;
+wire c_out;
+wire[7:0] sum;
+alu_8bits	alu_8bits(.a(a),.b(b),.oper(oper),.c_out(c_out),.sum(sum));
+
+initial begin
+	#10 a<=8'b0000_0000;b<=8'b0000_0001;oper<=`Xor;
+	#10 a<=8'b0000_0011;b<=8'b0000_0101;oper<=`Or;
+	#10 a<=8'b0000_0100;b<=8'b0000_1001;oper<=`Xor;
+	#10 a<=8'b0000_0110;b<=8'b0110_0001;oper<=`Xnor;
+	#10 a<=8'b0110_0000;b<=8'b0010_0001;oper<=`And;
+	
+end
+
+
+
+
+endmodule
